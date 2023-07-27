@@ -8,6 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNotificationContext } from "../../context/notification.context";
+import { LoginValidator } from "../../utils/validateForm";
 
 type LoginType = {
   username: string;
@@ -20,13 +22,22 @@ export const LoginPage: React.FC<object> = () => {
     password: "",
   });
 
+  const { getError, getSuccess } = useNotificationContext();
+
   const dataLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(loginData);
+    LoginValidator.validate(loginData)
+      .then(() => {
+        getSuccess(JSON.stringify(loginData));
+      })
+      .catch((error) => {
+        getError(error.message);
+      });
+    getSuccess(JSON.stringify(loginData));
   };
 
   return (
@@ -50,7 +61,6 @@ export const LoginPage: React.FC<object> = () => {
                 fullWidth
                 label="Email"
                 type="text"
-                required
                 onChange={dataLogin}
                 sx={{ mt: 2, mb: 1.5 }}
               />
@@ -60,7 +70,6 @@ export const LoginPage: React.FC<object> = () => {
                 fullWidth
                 label="Password"
                 type="password"
-                required
                 onChange={dataLogin}
                 sx={{ mt: 1.5, mb: 1.5 }}
               />
