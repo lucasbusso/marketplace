@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
 import React from "react";
@@ -81,16 +80,6 @@ export const NavBar: React.FC<object> = () => {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-              >
-                <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-                  Marketplace
-                </Link>
-              </Typography>
               <Search>
                 <SearchIconWrapper>
                   <SearchIcon />
