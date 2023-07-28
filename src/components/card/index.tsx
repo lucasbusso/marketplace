@@ -41,7 +41,7 @@ export const CardComponent: React.FC<CardProps> = ({
         </CardContent>
         <CardActions>
           <Button fullWidth variant="contained" size="small">
-            Learn More
+            See description
           </Button>
         </CardActions>
       </Card>
