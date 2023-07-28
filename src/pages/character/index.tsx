@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { characters } from "../../api/charachters";
 import { ICharacter } from "./interfaces/character.interface";
-import { Box, Chip, Container, Divider, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Container,
+  Divider,
+  Grid,
+  Typography,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 export const CharacterPage: React.FC = () => {
@@ -27,7 +35,9 @@ export const CharacterPage: React.FC = () => {
   return (
     <Box sx={{ width: "100%" }}>
       {loading ? (
-        "Loading"
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 30 }}>
+          <CircularProgress />
+        </Box>
       ) : (
         <>
           <Link to="/">
