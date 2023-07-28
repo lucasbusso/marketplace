@@ -1,5 +1,5 @@
-export interface TypeCharacter {
-  id: string;
+export interface ICharacter {
+  id: number;
   name: string;
   status: string;
   species: string;

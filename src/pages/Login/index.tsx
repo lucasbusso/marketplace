@@ -10,6 +10,7 @@ import {
 import React, { useState } from "react";
 import { useNotificationContext } from "../../context/notification.context";
 import { LoginValidator } from "../../utils/validateForm";
+import { Link } from "react-router-dom";
 
 type LoginType = {
   username: string;
@@ -81,6 +82,11 @@ export const LoginPage: React.FC<object> = () => {
               >
                 Iniciar sesion
               </Button>
+              <Link to="/">
+                <Button fullWidth variant="outlined" type="button">
+                  Home
+                </Button>
+              </Link>
             </Box>
           </Paper>
         </Grid>
