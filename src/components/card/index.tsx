@@ -7,8 +7,10 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { addToCart } from "../../redux/slices/cart.slice";
 
 type CardProps = {
   image: string;
@@ -25,7 +27,26 @@ export const CardComponent: React.FC<CardProps> = ({
   status,
   id,
 }) => {
+  const [disableBtn, setDisableBtn] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const itemExist = useAppSelector((state) => state.cartReducer);
+
+  function handleAddToCart() {
+    dispatch(
+      addToCart({
+        id,
+        name,
+        image,
+        info: status,
+      })
+    );
+  }
+
+  useEffect(() => {
+    setDisableBtn(itemExist.some((item) => item.id === id));
+  }, [itemExist, id]);
+
   return (
     <div>
       <Card>
@@ -38,7 +59,14 @@ export const CardComponent: React.FC<CardProps> = ({
           onClick={() => navigate(`/character/${id}`)}
         />
         <CardContent>
-          <Typography variant="h4" sx={{ mb: 1.5, textDecoration: "none" }}>
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 1.5,
+              textDecoration: "none",
+              minHeight: "84px",
+            }}
+          >
             {name}
           </Typography>
           <Divider />
@@ -54,11 +82,19 @@ export const CardComponent: React.FC<CardProps> = ({
             fullWidth
             variant="contained"
             size="small"
-            sx={{ textDecoration: "none" }}
-            sx={{ cursor: "pointer" }}
+            sx={{ textDecoration: "none", cursor: "pointer" }}
             onClick={() => navigate(`/character/${id}`)}
           >
             See description
+          </Button>
+          <Button
+            fullWidth
+            variant="outlined"
+            size="small"
+            onClick={handleAddToCart}
+            disabled={disableBtn}
+          >
+            Add to cart
           </Button>
         </CardActions>
       </Card>
