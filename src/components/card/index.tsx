@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type CardProps = {
   image: string;
@@ -25,17 +25,18 @@ export const CardComponent: React.FC<CardProps> = ({
   status,
   id,
 }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <Card>
-        <Link to={`/character/${id}`}>
-          <CardMedia
-            component="img"
-            height="194"
-            image={image}
-            alt="Paella dish"
-          />
-        </Link>
+        <CardMedia
+          component="img"
+          height="194"
+          image={image}
+          alt="Paella dish"
+          sx={{ cursor: "pointer" }}
+          onClick={() => navigate(`/character/${id}`)}
+        />
         <CardContent>
           <Typography variant="h4" sx={{ mb: 1.5, textDecoration: "none" }}>
             {name}
@@ -54,6 +55,8 @@ export const CardComponent: React.FC<CardProps> = ({
             variant="contained"
             size="small"
             sx={{ textDecoration: "none" }}
+            sx={{ cursor: "pointer" }}
+            onClick={() => navigate(`/character/${id}`)}
           >
             See description
           </Button>
