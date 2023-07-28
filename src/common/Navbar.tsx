@@ -1,58 +1,70 @@
 import {
   AppBar,
+  Badge,
   Box,
   Button,
   Container,
+  Grid,
+  IconButton,
+  Stack,
   Toolbar,
   Typography,
 } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { CartComponent } from "./Cart";
+import { useAppSelector } from "../redux/hooks";
 
 export const NavBar: React.FC<object> = () => {
+  const navigate = useNavigate();
+  const items = useAppSelector((state) => state.cartReducer);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const handleStateViewDrawer = () => {
+    setOpen((state) => !state);
+  };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+    <Box sx={{ flexGrow: 1, position: "sticky", top: "0px" }}>
+      <AppBar position="sticky">
         <Toolbar>
-          <Container
-            sx={{
-              maxWidth: "xl",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <Container
-              sx={{ maxWidth: "xl", display: "flex", alignItems: "center" }}
+          <Container maxWidth="xl">
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              <Link to="/">
-                <Typography
-                  sx={{
-                    textDecoration: "none",
-                    color: "white",
-                    textAnchor: "none",
-                  }}
-                >
-                  Marketplace by Lucas{" "}
-                </Typography>
-              </Link>
-            </Container>
-            <Container
-              sx={{ display: "flex", justifyContent: "right", gap: "12px" }}
-            >
-              <Button>
-                <Link
-                  to="/login"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Login
+              <Grid item>
+                <Link to="/">
+                  <Typography sx={{ textDecoration: "none", color: "white" }}>
+                    Marketplace
+                  </Typography>
                 </Link>
-              </Button>
-              <Button variant="contained">Register</Button>
-            </Container>
+              </Grid>
+              <Grid item>
+                <Stack direction="row" spacing={2}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleStateViewDrawer()}
+                  >
+                    <Badge color="error" badgeContent={items.length}>
+                      <ShoppingCartOutlinedIcon />
+                    </Badge>
+                  </IconButton>
+                  <Button variant="contained" onClick={() => navigate("login")}>
+                    Login
+                  </Button>
+                  <Button variant="outlined">Register</Button>
+                </Stack>
+              </Grid>
+            </Grid>
           </Container>
         </Toolbar>
       </AppBar>
+      <CartComponent
+        open={open}
+        handleStateViewDrawer={handleStateViewDrawer}
+      />
     </Box>
   );
 };
