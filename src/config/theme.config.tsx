@@ -6,8 +6,8 @@ type ThemeProp = {
 };
 
 enum ThemePalette {
-  primary = "#c8fa5f",
-  background = "#12181b",
+  primary = "#45a9ff",
+  background = "#3974a7",
   error = "#f44336",
   bg_error = "rgba(244, 67, 54, 0.1)",
   success = "#66bb6a",
@@ -48,6 +48,20 @@ const theme = createTheme({
         standardSuccess: {
           border: `1px solid ${ThemePalette.success}`,
           background: ThemePalette.bg_success,
+        },
+      },
+    },
+    MuiAppBar: {
+      defaultProps: {
+        style: {
+          background: "#1d4364",
+        },
+      },
+    },
+    MuiCard: {
+      defaultProps: {
+        style: {
+          background: "#101f2d",
         },
       },
     },
