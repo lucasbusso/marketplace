@@ -1,15 +1,10 @@
-import {
-  Box,
-  CircularProgress,
-  Container,
-  Grid,
-  Pagination,
-} from "@mui/material";
+import { Container, Grid, Pagination } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { HeaderComponent } from "../../components";
 import { characters } from "../../api/charachters";
 import { CardComponent } from "../../components/card";
 import { TypeCharacter } from "./character.interface";
+import { Spinner } from "../../common/Spinner";
 
 export const HomePage: React.FC<object> = () => {
   const [allCharacters, setAllCharacters] = useState<TypeCharacter[] | null>(
@@ -55,9 +50,7 @@ export const HomePage: React.FC<object> = () => {
       )}
       <div>
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 30 }}>
-            <CircularProgress />
-          </Box>
+          <Spinner />
         ) : allCharacters?.length !== 0 ? (
           <Grid container spacing={2} direction="row">
             {allCharacters?.map((character) => (
