@@ -7,10 +7,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useNotificationContext } from "../../context/notification.context";
 import { LoginValidator } from "../../utils/validateForm";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
 
 type LoginType = {
   username: string;
@@ -18,28 +19,17 @@ type LoginType = {
 };
 
 export const LoginPage: React.FC<object> = () => {
-  const [loginData, setLoginData] = useState<LoginType>({
-    username: "",
-    password: "",
+  const { getSuccess } = useNotificationContext();
+  const formik = useFormik<LoginType>({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: LoginValidator,
+    onSubmit: (values: LoginType) => {
+      getSuccess(JSON.stringify(values));
+    },
   });
-
-  const { getError, getSuccess } = useNotificationContext();
-
-  const dataLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    LoginValidator.validate(loginData)
-      .then(() => {
-        getSuccess(JSON.stringify(loginData));
-      })
-      .catch((error) => {
-        getError(error.message);
-      });
-    getSuccess(JSON.stringify(loginData));
-  };
 
   return (
     <Container maxWidth="sm">
@@ -55,15 +45,20 @@ export const LoginPage: React.FC<object> = () => {
             <Typography variant="h4" sx={{ mt: 1, mb: 1 }}>
               Iniciar sesion
             </Typography>
-            <Box component="form" onSubmit={handleSubmit}>
+            <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"
                 margin="normal"
                 fullWidth
                 label="Email"
                 type="text"
-                onChange={dataLogin}
                 sx={{ mt: 2, mb: 1.5 }}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
               />
               <TextField
                 name="password"
@@ -71,8 +66,13 @@ export const LoginPage: React.FC<object> = () => {
                 fullWidth
                 label="Password"
                 type="password"
-                onChange={dataLogin}
                 sx={{ mt: 1.5, mb: 1.5 }}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
               <Button
                 fullWidth

@@ -81,7 +81,7 @@ export const HomePage: React.FC<object> = () => {
           count={pageCount}
           page={page}
           onChange={handleChange}
-          sx={{ display: "flex", justifyContent: "center", mb: 6 }}
+          sx={{ display: "flex", justifyContent: "center", mb: 6, mt: 6 }}
         />
       )}
     </Container>
