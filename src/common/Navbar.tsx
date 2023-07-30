@@ -24,7 +24,14 @@ export const NavBar: React.FC<object> = () => {
     setOpen((state) => !state);
   };
   return (
-    <Box sx={{ flexGrow: 1, position: "sticky", top: "0px" }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        position: "sticky",
+        top: "0px",
+        zIndex: "9",
+      }}
+    >
       <AppBar position="sticky">
         <Toolbar>
           <Container maxWidth="xl">
