@@ -14,7 +14,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({
 }) => {
   return (
     <div>
-      <Box sx={{ width: "100%", height: "350px" }}>
+      <Box sx={{ width: "100%", height: "200px" }}>
         <Grid
           container
           direction="row"
